@@ -604,24 +604,19 @@ body::after {
   font-family: 'Tiro Devanagari Hindi', serif;
   color: var(--mustard);
 }
-/* --- COMPREHENSIVE MOBILE RESPONSIVENESS --- */
+/* --- PURE REARRANGEMENT FOR MOBILE (NO DELETIONS) --- */
 @media (max-width: 768px) {
-  /* 1. Prevent Horizontal Scrolling */
+  /* Prevent horizontal screen stretching */
   html, body {
     overflow-x: hidden;
     width: 100%;
   }
 
-  /* 2. Disable custom cursor for touch screens */
-  body { cursor: auto; }
-  .cursor { display: none !important; }
-
-  /* 3. Navbar Structure Fix */
+  /* 1. Navbar: Stack logo and links neatly */
   nav {
-    flex-direction: column !important;
-    padding: 1rem !important;
-    height: auto !important;
-    gap: 10px;
+    flex-direction: column;
+    padding: 1rem 1.5rem !important;
+    gap: 15px;
     text-align: center;
   }
   .nav-links {
@@ -630,47 +625,37 @@ body::after {
     gap: 15px;
   }
 
-  /* 4. Typography Scaling (Prevents text from breaking containers) */
-  h1, .hero h1 {
-    font-size: 3.5rem !important; /* Adjust if still too large */
-    line-height: 1;
+  /* 2. Hero Section: Scale down large typography so it fits */
+  .hero h1 {
+    font-size: 4rem; 
   }
-  h2 { font-size: 2.5rem !important; }
-  
-  /* 5. Hero Section Fixes */
-  .hero {
-    padding: 2rem 1rem !important;
-    min-height: auto;
+  .hero p {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+
+  /* 3. Filter Buttons: Allow wrapping to the next line */
+  .filters {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* 4. Products & Grids: Switch to a 1-column vertical layout */
+  .products, .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* 5. Footer: Stack all the link columns */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
     text-align: center;
   }
 
-  /* 6. Grid & Product Card Stacking (Fixes squished content) */
-  .products, .grid, [style*="display: grid"] {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100%;
-    padding: 0 1rem;
-    gap: 1.5rem !important;
-  }
-  
-  .product-card {
-    width: 100% !important;
-    margin: 0 auto;
-  }
-
-  /* 7. Image containment */
-  img, video {
-    max-width: 100%;
-    height: auto;
-  }
-
-  /* 8. Filter Pills wrapping */
-  .filters {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    padding: 0 1rem;
+  /* 6. Scrolling Banner: Scale down text */
+  .scrolling-text h2 {
+    font-size: 2.5rem;
   }
 }
 </style>
