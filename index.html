@@ -1056,10 +1056,7 @@ function setFilter(btn, filter) {
     card.style.transform = show ? '' : 'rotate(0deg) scale(0.95)';
     card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
   });
-}
-</script>
-  <script>
-// Timed flip loop for product cards with front + back images.
+  // Timed flip loop for product cards with front + back images.
 // Back image shows by default. On hover (desktop) or touch (mobile),
 // it flips to front immediately, holds 2s, flips back, holds 2s, repeats.
 // Moving the cursor away (or lifting your finger) resets it to showing the back.
@@ -1101,7 +1098,9 @@ function setFilter(btn, filter) {
     initFlipCards();
   }
 })();
+}
 </script>
+  
   
   <!-- GSAP Core -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
