@@ -369,7 +369,7 @@ nav.scrolled {
   font-style: italic;
 }
 
- /* Flip-card mechanism for products with front + back images.
+  * Flip-card mechanism for products with front + back images.
    Back image shows by default. Hover/tap starts a timed loop
    (JS-controlled, not CSS :hover) that flips every 2 seconds. */
 .flip-container {
@@ -434,7 +434,7 @@ nav.scrolled {
 .product-badge {
   pointer-events: none;
 }
-  
+
 /* OUR THING */
 .our-thing {
   background: var(--near-black);
@@ -929,6 +929,44 @@ body::after {
   </div>
 </section>
 
+<!-- TORN EDGE -->
+<div class="torn-edge"></div>
+
+<!-- OUR THING -->
+<section class="our-thing" id="our-thing">
+  <div class="our-thing-inner">
+    <div class="our-thing-text reveal">
+      <p class="our-thing-eyebrow">Our Thing</p>
+      <h2 class="our-thing-headline">
+        We put <span class="red">Rekha</span><br>
+        on a ringer tee.<br>
+        <span class="red">We're not sorry.</span>
+      </h2>
+      <p class="our-thing-body">
+        Two eras. One brand. Bollywood icons remixed as pop art. Y2K India as a second language. Words stitched on backs of shirts. All of it worn on real streets by real people who get it.
+      </p>
+    </div>
+    <div class="our-thing-images reveal">
+      <div class="our-img-box">
+        <div class="our-img-inner">Retro Print Detail</div>
+        <div class="our-img-label">Back print detail — Retro Drop</div>
+      </div>
+      <div class="our-img-box">
+        <div class="our-img-inner">Y2K Shirt</div>
+        <div class="our-img-label">Y2K Edit — Cuban collar</div>
+      </div>
+      <div class="our-img-box">
+        <div class="our-img-inner">Lifestyle Shot</div>
+        <div class="our-img-label">Shot in Delhi</div>
+      </div>
+      <div class="our-img-box">
+        <div class="our-img-inner">Text Stitch</div>
+        <div class="our-img-label">Text piece — embroidery detail</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- TORN EDGE PARCHMENT -->
 <div class="torn-edge torn-edge-parchment"></div>
 
@@ -1029,8 +1067,6 @@ function setFilter(btn, filter) {
   });
 }
 </script>
-  
-  
   <!-- GSAP Core -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
 <!-- GSAP ScrollTrigger (for animations tied to scrolling) -->
@@ -1053,11 +1089,8 @@ function setFilter(btn, filter) {
 
         requestAnimationFrame(raf);
     </script>
-  
 
-</script>
-
-<script>
+  <script>
 // Timed flip loop for product cards with front + back images.
 // Back image shows by default. On hover (desktop) or touch (mobile),
 // it flips to front immediately, holds 2s, flips back, holds 2s, repeats.
