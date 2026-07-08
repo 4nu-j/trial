@@ -369,10 +369,12 @@ nav.scrolled {
   font-style: italic;
 }
 
-  /* Flip-card mechanism for products with front + back images */
+ /* Flip-card mechanism for products with front + back images.
+   Back image shows by default. Hover/tap starts a timed loop
+   (JS-controlled, not CSS :hover) that flips every 2 seconds. */
 .flip-container {
   perspective: 1200px;
-  cursor: pointer; /* falls back to pointer even though cursor:none is set elsewhere */
+  cursor: pointer;
   width: 100%;
   height: 100%;
 }
@@ -383,9 +385,8 @@ nav.scrolled {
   transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
   transform-style: preserve-3d;
 }
-/* Desktop: flip on hover. Mobile/touch: flip on tap via .flipped class (added by JS) */
-.flip-container:hover .flip-inner,
-.flip-container.flipped .flip-inner {
+/* JS toggles this class on a timer — do NOT use :hover here, it causes flicker */
+.flip-inner.is-flipped {
   transform: rotateY(180deg);
 }
 .flip-face {
@@ -397,7 +398,9 @@ nav.scrolled {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
-.flip-back {
+/* the face assigned class="flip-face flip-back-face" sits at 180deg,
+   so it's hidden until is-flipped is applied */
+.flip-back-face {
   transform: rotateY(180deg);
 }
 /* Single static image (no flip) for designs that only have one side */
@@ -837,10 +840,10 @@ body::after {
     <!-- WAFFLE TEE — Blond (front + back, flips) -->
     <div class="product-card" data-tags="waffle">
       <div class="product-img">
-        <div class="flip-container" onclick="this.classList.toggle('flipped')">
+        <div class="flip-container">
           <div class="flip-inner">
-            <img class="flip-face flip-front" src="images/blond-front.png" alt="Blond - front">
-            <img class="flip-face flip-back" src="images/blond-back.png" alt="Blond - back">
+            <img class="flip-face" src="images/blond-back.png" alt="Blond - back">
+            <img class="flip-face flip-back-face" src="images/blond-front.png" alt="Blond - front">
           </div>
         </div>
         <div class="product-badge badge-retro">Retro Drop ↗</div>
@@ -857,10 +860,10 @@ body::after {
     <!-- OVERSIZED TEE — Delusional (front + back, flips) -->
     <div class="product-card" data-tags="oversized">
       <div class="product-img">
-        <div class="flip-container" onclick="this.classList.toggle('flipped')">
+        <div class="flip-container">
           <div class="flip-inner">
-            <img class="flip-face flip-front" src="images/delusional-front.png" alt="Delusional - front">
-            <img class="flip-face flip-back" src="images/delusional-back.png" alt="Delusional - back">
+            <img class="flip-face" src="images/delusional-back.png" alt="Delusional - back">
+            <img class="flip-face flip-back-face" src="images/delusional-front.png" alt="Delusional - front">
           </div>
         </div>
         <div class="product-badge badge-text">Text Piece</div>
@@ -877,10 +880,10 @@ body::after {
     <!-- RINGER TEE — Gulhad (front + back, flips) -->
     <div class="product-card" data-tags="ringer">
       <div class="product-img">
-        <div class="flip-container" onclick="this.classList.toggle('flipped')">
+        <div class="flip-container">
           <div class="flip-inner">
-            <img class="flip-face flip-front" src="images/gulhad-front.png" alt="Gulhad - front">
-            <img class="flip-face flip-back" src="images/gulhad-back.png" alt="Gulhad - back">
+            <img class="flip-face" src="images/gulhad-back.png" alt="Gulhad - back">
+            <img class="flip-face flip-back-face" src="images/gulhad-front.png" alt="Gulhad - front">
           </div>
         </div>
         <div class="product-badge badge-retro">Retro Drop ↗</div>
@@ -897,10 +900,10 @@ body::after {
     <!-- OVERSIZED TEE — Netra (front + back, flips) -->
     <div class="product-card" data-tags="oversized">
       <div class="product-img">
-        <div class="flip-container" onclick="this.classList.toggle('flipped')">
+        <div class="flip-container">
           <div class="flip-inner">
-            <img class="flip-face flip-front" src="images/netra-front.png" alt="Netra - front">
-            <img class="flip-face flip-back" src="images/netra-back.png" alt="Netra - back">
+            <img class="flip-face" src="images/netra-back.png" alt="Netra - back">
+            <img class="flip-face flip-back-face" src="images/netra-front.png" alt="Netra - front">
           </div>
         </div>
         <div class="product-badge badge-text">Text Piece</div>
@@ -916,7 +919,7 @@ body::after {
  
   </div>
 </section>
-
+  
 <!-- TORN EDGE -->
 <div class="torn-edge"></div>
 
@@ -1077,5 +1080,49 @@ function setFilter(btn, filter) {
 
         requestAnimationFrame(raf);
     </script>
+  <script>
+// Timed flip loop for product cards with front + back images.
+// Back image shows by default. On hover (desktop) or touch (mobile),
+// it flips to front immediately, holds 2s, flips back, holds 2s, repeats.
+// Moving the cursor away (or lifting your finger) resets it to showing the back.
+(function () {
+  function initFlipCards() {
+    document.querySelectorAll('.flip-container').forEach(function (container) {
+      var inner = container.querySelector('.flip-inner');
+      var intervalId = null;
+ 
+      function startFlipping() {
+        if (intervalId) return; // already running
+        inner.classList.add('is-flipped'); // flip to front right away
+        intervalId = setInterval(function () {
+          inner.classList.toggle('is-flipped');
+        }, 2000); // flip every 2 seconds
+      }
+ 
+      function stopFlipping() {
+        clearInterval(intervalId);
+        intervalId = null;
+        inner.classList.remove('is-flipped'); // reset to back
+      }
+ 
+      container.addEventListener('mouseenter', startFlipping);
+      container.addEventListener('mouseleave', stopFlipping);
+ 
+      // touch support for mobile
+      container.addEventListener('touchstart', function (e) {
+        e.preventDefault();
+        startFlipping();
+      }, { passive: false });
+      container.addEventListener('touchend', stopFlipping);
+    });
+  }
+ 
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFlipCards);
+  } else {
+    initFlipCards();
+  }
+})();
+</script>
 </body>
 </html>
