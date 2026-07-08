@@ -1058,29 +1058,6 @@ function setFilter(btn, filter) {
   });
 }
 </script>
-  <!-- GSAP Core -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
-<!-- GSAP ScrollTrigger (for animations tied to scrolling) -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
-  <!-- Lenis Smooth Scroll Script -->
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
-    <script>
-        // Initialize Lenis
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // standard easing
-            smooth: true,
-        });
-
-        // Setup the requestAnimationFrame loop
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-
-        requestAnimationFrame(raf);
-    </script>
-  
   <script>
 // Timed flip loop for product cards with front + back images.
 // Back image shows by default. On hover (desktop) or touch (mobile),
@@ -1124,6 +1101,32 @@ function setFilter(btn, filter) {
     initFlipCards();
   }
 })();
+</script>
+  
+  <!-- GSAP Core -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+<!-- GSAP ScrollTrigger (for animations tied to scrolling) -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scroll Script -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+    <script>
+        // Initialize Lenis
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // standard easing
+            smooth: true,
+        });
+
+        // Setup the requestAnimationFrame loop
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+    </script>
+  
+
 </script>
 </body>
 </html>
