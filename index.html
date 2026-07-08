@@ -369,6 +369,60 @@ nav.scrolled {
   font-style: italic;
 }
 
+  /* Flip-card mechanism for products with front + back images */
+.flip-container {
+  perspective: 1200px;
+  cursor: pointer; /* falls back to pointer even though cursor:none is set elsewhere */
+  width: 100%;
+  height: 100%;
+}
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+  transform-style: preserve-3d;
+}
+/* Desktop: flip on hover. Mobile/touch: flip on tap via .flipped class (added by JS) */
+.flip-container:hover .flip-inner,
+.flip-container.flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-back {
+  transform: rotateY(180deg);
+}
+/* Single static image (no flip) for designs that only have one side */
+.product-img-single {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* small hint label so people know they can flip it */
+.flip-hint {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(242,237,228,0.7);
+  background: rgba(0,0,0,0.35);
+  padding: 2px 6px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 3;
+}
+
 /* OUR THING */
 .our-thing {
   background: var(--near-black);
@@ -755,161 +809,111 @@ body::after {
     </div>
     <a href="#" class="view-all">View All →</a>
   </div>
-
+ 
   <div class="filter-row reveal">
     <button class="filter-pill active" onclick="setFilter(this, 'all')">All</button>
-    <button class="filter-pill" onclick="setFilter(this, 'henley')">Henleys</button>
-    <button class="filter-pill" onclick="setFilter(this, 'ringer')">Ringer Tees</button>
     <button class="filter-pill" onclick="setFilter(this, 'waffle')">Waffle Tees</button>
-    <button class="filter-pill" onclick="setFilter(this, 'polo')">Ringer Polos</button>
-    <button class="filter-pill" onclick="setFilter(this, 'shirt')">Shirts</button>
-    <button class="filter-pill" onclick="setFilter(this, 'retro')">Retro Drop</button>
-    <button class="filter-pill" onclick="setFilter(this, 'text')">Text Pieces</button>
+    <button class="filter-pill" onclick="setFilter(this, 'ringer')">Ringer Tees</button>
+    <button class="filter-pill" onclick="setFilter(this, 'oversized')">Oversized Tees</button>
+    <button class="filter-pill" onclick="setFilter(this, 'fullsleeve')">Full Sleeve Box Fit Shirts</button>
   </div>
-
+ 
   <div class="product-grid reveal" id="productGrid">
-
-    <!-- HENLEY 1 -->
-    <div class="product-card" data-tags="henley retro">
+ 
+    <!-- FULL SLEEVE BOX FIT SHIRT — REKHA (back print only, no flip) -->
+    <div class="product-card" data-tags="fullsleeve">
       <div class="product-img">
-        <div class="product-img-placeholder">AHANKARI</div>
+        <img class="product-img-single" src="images/REKHA-back.png" alt="Rekha - back print">
         <div class="product-badge badge-retro">Retro Drop ↗</div>
       </div>
       <div class="product-body">
-        <p class="product-type">Henley</p>
-        <p class="product-name">Rekha '78</p>
-        <p class="product-price">₹1,299 &nbsp;·&nbsp; S / M / L</p>
+        <p class="product-type">Full Sleeve Box Fit Shirt</p>
+        <p class="product-name">Rekha</p>
+        <p class="product-price">₹1,699 &nbsp;·&nbsp; S / M / L</p>
         <p class="product-detail">back print — bollywood icon, gen z edit</p>
       </div>
     </div>
-
-    <!-- RINGER TEE 1 -->
-    <div class="product-card" data-tags="ringer retro">
+ 
+    <!-- WAFFLE TEE — Blond (front + back, flips) -->
+    <div class="product-card" data-tags="waffle">
       <div class="product-img">
-        <div class="product-img-placeholder">AHANKARI</div>
+        <div class="flip-container" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <img class="flip-face flip-front" src="images/blond-front.png" alt="Blond - front">
+            <img class="flip-face flip-back" src="images/blond-back.png" alt="Blond - back">
+          </div>
+        </div>
         <div class="product-badge badge-retro">Retro Drop ↗</div>
-      </div>
-      <div class="product-body">
-        <p class="product-type">Ringer Tee</p>
-        <p class="product-name">Amitabh '73</p>
-        <p class="product-price">₹1,199 &nbsp;·&nbsp; S / M / L</p>
-        <p class="product-detail">back print — matchbox art, contrast ringer</p>
-      </div>
-    </div>
-
-    <!-- WAFFLE TEE 1 -->
-    <div class="product-card" data-tags="waffle text">
-      <div class="product-img">
-        <div class="product-img-placeholder">AHANKARI</div>
-        <div class="product-badge badge-text">Text Piece</div>
+        <div class="flip-hint">flip ⟲</div>
       </div>
       <div class="product-body">
         <p class="product-type">Waffle Tee</p>
-        <p class="product-name">Dil Se</p>
+        <p class="product-name">Blond</p>
         <p class="product-price">₹1,349 &nbsp;·&nbsp; S / M / L</p>
-        <p class="product-detail">back stitch — दिल से in mustard thread</p>
+        <p class="product-detail">front + back print — tap or hover to flip</p>
       </div>
     </div>
-
-    <!-- RINGER POLO 1 -->
-    <div class="product-card" data-tags="polo retro">
+ 
+    <!-- OVERSIZED TEE — Delusional (front + back, flips) -->
+    <div class="product-card" data-tags="oversized">
       <div class="product-img">
-        <div class="product-img-placeholder">AHANKARI</div>
-        <div class="product-badge badge-retro">Retro Drop ↗</div>
-      </div>
-      <div class="product-body">
-        <p class="product-type">Ringer Polo</p>
-        <p class="product-name">Disco Bombay</p>
-        <p class="product-price">₹1,499 &nbsp;·&nbsp; S / M / L</p>
-        <p class="product-detail">back print — late 90s film poster remix</p>
-      </div>
-    </div>
-
-    <!-- SHIRT 1 -->
-    <div class="product-card" data-tags="shirt text">
-      <div class="product-img">
-        <div class="product-img-placeholder">AHANKARI</div>
+        <div class="flip-container" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <img class="flip-face flip-front" src="images/delusional-front.png" alt="Delusional - front">
+            <img class="flip-face flip-back" src="images/delusional-back.png" alt="Delusional - back">
+          </div>
+        </div>
         <div class="product-badge badge-text">Text Piece</div>
+        <div class="flip-hint">flip ⟲</div>
       </div>
       <div class="product-body">
-        <p class="product-type">Shirt</p>
-        <p class="product-name">Blissful</p>
-        <p class="product-price">₹1,699 &nbsp;·&nbsp; S / M / L</p>
-        <p class="product-detail">back stitch — "blissful" in brick red thread</p>
+        <p class="product-type">Oversized Tee</p>
+        <p class="product-name">Delusional</p>
+        <p class="product-price">₹1,399 &nbsp;·&nbsp; S / M / L</p>
+        <p class="product-detail">front + back print — tap or hover to flip</p>
       </div>
     </div>
-
-    <!-- HENLEY 2 -->
-    <div class="product-card" data-tags="henley text">
+ 
+    <!-- RINGER TEE — Gulhad (front + back, flips) -->
+    <div class="product-card" data-tags="ringer">
       <div class="product-img">
-        <div class="product-img-placeholder">AHANKARI</div>
-        <div class="product-badge badge-text">Text Piece</div>
-      </div>
-      <div class="product-body">
-        <p class="product-type">Henley</p>
-        <p class="product-name">Majnu</p>
-        <p class="product-price">₹1,299 &nbsp;·&nbsp; S / M / L</p>
-        <p class="product-detail">back stitch — "majnu" in sepia thread</p>
-      </div>
-    </div>
-
-    <!-- RINGER TEE 2 -->
-    <div class="product-card" data-tags="ringer retro">
-      <div class="product-img">
-        <div class="product-img-placeholder">AHANKARI</div>
+        <div class="flip-container" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <img class="flip-face flip-front" src="images/gulhad-front.png" alt="Gulhad - front">
+            <img class="flip-face flip-back" src="images/gulhad-back.png" alt="Gulhad - back">
+          </div>
+        </div>
         <div class="product-badge badge-retro">Retro Drop ↗</div>
-        <div class="product-badge badge-sold" style="top:44px;">Sold Out</div>
+        <div class="flip-hint">flip ⟲</div>
       </div>
       <div class="product-body">
         <p class="product-type">Ringer Tee</p>
-        <p class="product-name">Naari No. 1</p>
+        <p class="product-name">Gulhad</p>
         <p class="product-price">₹1,199 &nbsp;·&nbsp; S / M / L</p>
-        <p class="product-detail">back print — vintage naari art, gen z edit</p>
+        <p class="product-detail">front + back print — tap or hover to flip</p>
       </div>
     </div>
-
-    <!-- WAFFLE TEE 2 -->
-    <div class="product-card" data-tags="waffle retro">
+ 
+    <!-- OVERSIZED TEE — Netra (front + back, flips) -->
+    <div class="product-card" data-tags="oversized">
       <div class="product-img">
-        <div class="product-img-placeholder">AHANKARI</div>
-        <div class="product-badge badge-retro">Retro Drop ↗</div>
-      </div>
-      <div class="product-body">
-        <p class="product-type">Waffle Tee</p>
-        <p class="product-name">Star Struck</p>
-        <p class="product-price">₹1,349 &nbsp;·&nbsp; S / M / L</p>
-        <p class="product-detail">back print — early 2000s film poster remix</p>
-      </div>
-    </div>
-
-    <!-- RINGER POLO 2 -->
-    <div class="product-card" data-tags="polo text">
-      <div class="product-img">
-        <div class="product-img-placeholder">AHANKARI</div>
+        <div class="flip-container" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <img class="flip-face flip-front" src="images/netra-front.png" alt="Netra - front">
+            <img class="flip-face flip-back" src="images/netra-back.png" alt="Netra - back">
+          </div>
+        </div>
         <div class="product-badge badge-text">Text Piece</div>
+        <div class="flip-hint">flip ⟲</div>
       </div>
       <div class="product-body">
-        <p class="product-type">Ringer Polo</p>
-        <p class="product-name">Yaad Hai</p>
-        <p class="product-price">₹1,499 &nbsp;·&nbsp; S / M / L</p>
-        <p class="product-detail">back stitch — "याद है" in teal thread</p>
+        <p class="product-type">Oversized Tee</p>
+        <p class="product-name">Netra</p>
+        <p class="product-price">₹1,399 &nbsp;·&nbsp; S / M / L</p>
+        <p class="product-detail">front + back print — tap or hover to flip</p>
       </div>
     </div>
-
-    <!-- SHIRT 2 -->
-    <div class="product-card" data-tags="shirt retro">
-      <div class="product-img">
-        <div class="product-img-placeholder">AHANKARI</div>
-        <div class="product-badge badge-retro">Retro Drop ↗</div>
-      </div>
-      <div class="product-body">
-        <p class="product-type">Shirt</p>
-        <p class="product-name">Superhit</p>
-        <p class="product-price">₹1,699 &nbsp;·&nbsp; S / M / L</p>
-        <p class="product-detail">back print — vintage film poster collage</p>
-      </div>
-    </div>
-
+ 
   </div>
 </section>
 
