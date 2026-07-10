@@ -772,7 +772,13 @@ body::after {
     <li><a href="#our-thing">Our Thing</a></li>
     <li><a href="#drops">Drops</a></li>
   </ul>
-  <a href="#" class="nav-cart">Cart (0)</a>
+  <div class="cart-wrapper" style="position: relative; display: flex; align-items: center;">
+    <!-- The Grandma Video (Hidden by default) -->
+    <video id="grandma-mascot" src="images/grandma-animation.webm" muted playsinline style="position: absolute; right: 100px; width: 45px; opacity: 0; pointer-events: none; transform-origin: center;"></video>
+    
+    <!-- Your existing cart button -->
+    <a href="#" class="nav-cart" id="cart-btn">Cart (<span id="cart-count">0</span>)</a>
+</div>
 </nav>
 
 <!-- HERO -->
@@ -1143,6 +1149,59 @@ function setFilter(btn, filter) {
     initFlipCards();
   }
 })();
+</script>
+
+  <script>
+    // Grab the elements from your HTML
+    const grandmaVideo = document.getElementById('grandma-mascot');
+    const cartCountEl = document.getElementById('cart-count');
+    let currentCartCount = 0;
+
+    // The function that plays the 2-second animation
+    function playCartAnimation() {
+        currentCartCount++; // Increase the cart number
+        
+        // Reset the video to the start and play it
+        grandmaVideo.currentTime = 0;
+        grandmaVideo.play();
+        
+        // Create the GSAP timeline (Total duration = exactly 2.0 seconds)
+        const tl = gsap.timeline();
+        
+        tl.fromTo(grandmaVideo, 
+            { x: -60, scale: 1, opacity: 0 }, 
+            { x: -30, opacity: 1, duration: 0.4, ease: "power2.out" } // 0.4s: Slide in and fade in
+        )
+        .to(grandmaVideo, {
+            x: -10,
+            duration: 1.2,
+            ease: "none" // 1.2s: Slowly move toward the cart
+        })
+        .to(grandmaVideo, {
+            scale: 1.4,
+            duration: 0.2,
+            ease: "power1.out" // 0.2s: THE POP (Scale up quickly)
+        })
+        .to(grandmaVideo, {
+            scale: 0,
+            opacity: 0,
+            x: 10,
+            duration: 0.2,
+            ease: "back.in(2)", // 0.2s: Shrink into the cart and vanish
+            onComplete: () => {
+                // Update the cart text exactly when she pops and vanishes
+                cartCountEl.innerText = currentCartCount;
+            }
+        });
+    }
+
+    // Attach this animation to your Add to Cart buttons
+    // document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+    //     btn.addEventListener('click', (e) => {
+    //         e.preventDefault();
+    //         playCartAnimation();
+    //     });
+    // });
 </script>
   
 </body>
