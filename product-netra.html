@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netra — Ringer Tee — AHANKARI</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Tiro+Devanagari+Hindi&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --parchment: #F2EDE4;
+  --parchment-dark: #E8E0D2;
+  --near-black: #1A1410;
+  --deep-black: #0F0B08;
+  --brick-red: #C0392B;
+  --brick-red-dark: #9B2D20;
+  --mustard: #C9952A;
+  --teal: #2A5C58;
+  --sepia: #8B6347;
+  --border: #D4C9BB;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--parchment);
+  color: var(--near-black);
+  font-family: 'Space Mono', monospace;
+  overflow-x: hidden;
+  cursor: none;
+}
+/* CUSTOM CURSOR */
+.cursor {
+  width: 12px; height: 12px;
+  background: var(--parchment);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  mix-blend-mode: difference;
+}
+.cursor.hover {
+  width: 40px; height: 40px;
+  background: var(--parchment);
+  opacity: 1;
+}
+/* NAVBAR */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 1.25rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.4s ease, padding 0.4s ease;
+  background: var(--near-black);
+}
+nav.scrolled {
+  background: var(--near-black);
+  padding: 0.875rem 3rem;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+  color: var(--parchment);
+  text-decoration: none;
+  line-height: 1;
+}
+.nav-tagline {
+  font-size: 9px;
+  color: var(--sepia);
+  letter-spacing: 0.12em;
+  margin-top: 1px;
+  display: block;
+}
+.nav-links {
+  display: flex; gap: 2.5rem; list-style: none;
+}
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--parchment);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  text-transform: uppercase;
+}
+.nav-links a:hover, .nav-links a.active { opacity: 1; }
+.nav-cart {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--parchment);
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 1px solid rgba(242,237,228,0.3);
+  padding: 6px 16px;
+  transition: all 0.2s;
+}
+.nav-cart:hover {
+  background: var(--parchment);
+  color: var(--near-black);
+}
+
+/* PAGE HERO (for subpages) */
+.page-hero {
+  background: var(--near-black);
+  padding: 10rem 4rem 5rem;
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: attr(data-hindi);
+  font-family: 'Tiro Devanagari Hindi', serif;
+  font-size: 14rem;
+  color: rgba(242,237,228,0.03);
+  position: absolute;
+  right: -1rem; top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  white-space: nowrap;
+  line-height: 1;
+}
+.page-hero-eyebrow {
+  font-size: 11px; letter-spacing: 0.2em;
+  color: var(--mustard); text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.page-hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 0.95;
+  color: var(--parchment);
+  letter-spacing: 0.02em;
+}
+.page-hero-title .red { color: var(--brick-red); }
+.page-hero-sub {
+  font-size: 12px; color: rgba(242,237,228,0.5);
+  letter-spacing: 0.06em; line-height: 1.9;
+  max-width: 480px; margin-top: 1.25rem;
+}
+
+/* SECTIONS */
+.section-pad { padding: 6rem 4rem; }
+.section-pad-tight { padding: 4rem 4rem; }
+
+.section-header {
+  display: flex; align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem; letter-spacing: 0.04em;
+  color: var(--near-black);
+}
+.section-label {
+  font-size: 11px; letter-spacing: 0.14em;
+  color: var(--sepia); text-transform: uppercase;
+}
+.view-all {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--brick-red); text-decoration: none;
+  border-bottom: 1px solid var(--brick-red);
+  padding-bottom: 1px;
+  transition: opacity 0.2s;
+}
+.view-all:hover { opacity: 0.6; }
+
+.btn-primary {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  background: var(--brick-red);
+  color: var(--parchment);
+  border: none; padding: 14px 32px;
+  cursor: none; text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s, transform 0.2s;
+  position: relative; overflow: hidden;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--parchment);
+  transform: translateX(-101%);
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  z-index: 0;
+}
+.btn-primary:hover { color: var(--brick-red); }
+.btn-primary:hover::after { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+
+.btn-secondary {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  background: var(--near-black);
+  color: var(--parchment);
+  border: none; padding: 14px 32px;
+  cursor: none; align-self: flex-start;
+  transition: background 0.2s;
+}
+.btn-secondary:hover { background: var(--deep-black); }
+
+/* VALUE / FEATURE CARDS (About page) */
+.value-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.value-card {
+  background: var(--parchment-dark);
+  padding: 2rem 1.75rem;
+  border: 1px solid var(--border);
+}
+.value-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem; color: var(--brick-red);
+  line-height: 1; margin-bottom: 1rem;
+}
+.value-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.value-copy {
+  font-size: 12px; color: var(--sepia);
+  line-height: 1.8; letter-spacing: 0.02em;
+}
+
+/* OUR THING style dark block (reused for About story) */
+.dark-block {
+  background: var(--near-black);
+  padding: 7rem 4rem;
+  position: relative; overflow: hidden;
+}
+.dark-block-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: center;
+}
+.dark-block-eyebrow {
+  font-size: 10px; letter-spacing: 0.2em;
+  color: var(--mustard); text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.dark-block-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  line-height: 1.05;
+  color: var(--parchment);
+  letter-spacing: 0.03em;
+  margin-bottom: 1.5rem;
+}
+.dark-block-headline .red { color: var(--brick-red); }
+.dark-block-body {
+  font-size: 12px; color: rgba(242,237,228,0.5);
+  line-height: 2; letter-spacing: 0.04em;
+  max-width: 460px;
+}
+.dark-block-body p + p { margin-top: 1rem; }
+
+/* FORM (Contact page) */
+.form-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+}
+.contact-form {
+  display: flex; flex-direction: column; gap: 14px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-input, .form-textarea {
+  background: var(--parchment-dark);
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px; color: var(--near-black);
+  outline: none; letter-spacing: 0.03em;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--sepia); opacity: 0.6; }
+.form-input:focus, .form-textarea:focus { border-color: var(--brick-red); }
+.form-textarea { resize: vertical; min-height: 140px; font-family: 'Space Mono', monospace; }
+.form-note {
+  font-size: 10px; color: var(--sepia);
+  letter-spacing: 0.05em; line-height: 1.7; margin-top: 4px;
+}
+.contact-info-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--sepia); margin-bottom: 0.6rem;
+}
+.contact-info-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.3rem; color: var(--near-black);
+  margin-bottom: 2rem; letter-spacing: 0.02em;
+}
+.contact-info-value a { color: var(--brick-red); text-decoration: none; }
+.contact-info-value a:hover { opacity: 0.7; }
+
+/* LEGAL / POLICY TEXT */
+.legal-updated {
+  font-size: 11px; color: var(--sepia);
+  letter-spacing: 0.08em; margin-bottom: 3rem;
+  text-transform: uppercase;
+}
+.legal-block { max-width: 780px; }
+.legal-block h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem; letter-spacing: 0.03em;
+  color: var(--near-black);
+  margin-top: 2.5rem; margin-bottom: 0.9rem;
+}
+.legal-block h3:first-child { margin-top: 0; }
+.legal-block p {
+  font-size: 13px; color: var(--near-black);
+  line-height: 1.9; letter-spacing: 0.01em;
+  margin-bottom: 1rem;
+  opacity: 0.85;
+}
+.legal-block ul {
+  margin: 0 0 1rem 1.3rem;
+}
+.legal-block li {
+  font-size: 13px; color: var(--near-black);
+  line-height: 1.9; letter-spacing: 0.01em;
+  opacity: 0.85;
+  margin-bottom: 0.4rem;
+}
+.legal-disclaimer {
+  margin-top: 3rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--parchment-dark);
+  border-left: 3px solid var(--brick-red);
+  font-size: 11px; color: var(--sepia);
+  line-height: 1.8; letter-spacing: 0.03em;
+  max-width: 780px;
+}
+
+/* TORN EDGE */
+.torn-edge {
+  position: relative;
+  margin-top: -2px;
+}
+.torn-edge::before {
+  content: '';
+  display: block;
+  width: 100%; height: 30px;
+  background: var(--near-black);
+  clip-path: polygon(0 0, 2% 100%, 5% 20%, 8% 90%, 11% 10%, 14% 80%, 17% 30%, 20% 100%, 23% 15%, 26% 85%, 29% 40%, 32% 95%, 35% 20%, 38% 75%, 41% 10%, 44% 90%, 47% 25%, 50% 100%, 53% 15%, 56% 80%, 59% 35%, 62% 95%, 65% 20%, 68% 85%, 71% 10%, 74% 90%, 77% 30%, 80% 100%, 83% 15%, 86% 75%, 89% 40%, 92% 95%, 95% 20%, 98% 80%, 100% 0);
+}
+.torn-edge-parchment::before { background: var(--parchment); }
+.torn-edge-red::before { background: var(--brick-red); }
+
+.hindi-accent {
+  font-family: 'Tiro Devanagari Hindi', serif;
+  color: var(--mustard);
+}
+
+/* FOOTER */
+footer {
+  background: var(--deep-black);
+  padding: 4rem 4rem 2rem;
+  border-top: 1px solid rgba(201,149,42,0.15);
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem; margin-bottom: 3rem;
+}
+.footer-brand-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem; letter-spacing: 0.08em;
+  color: var(--parchment); margin-bottom: 0.5rem;
+}
+.footer-brand-tag {
+  font-size: 10px; color: var(--sepia);
+  letter-spacing: 0.14em; margin-bottom: 1rem;
+}
+.footer-brand-copy {
+  font-size: 11px; color: rgba(139,99,71,0.6);
+  line-height: 1.8; letter-spacing: 0.04em;
+}
+.footer-col-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--parchment);
+  margin-bottom: 1rem;
+}
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 0.5rem; }
+.footer-links a {
+  font-size: 12px; color: var(--sepia);
+  text-decoration: none; letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--mustard); }
+.footer-bottom {
+  border-top: 1px solid rgba(139,99,71,0.2);
+  padding-top: 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copy {
+  font-size: 10px; color: rgba(139,99,71,0.4);
+  letter-spacing: 0.1em;
+}
+.footer-made {
+  font-size: 10px; color: rgba(139,99,71,0.4);
+  letter-spacing: 0.1em; font-style: italic;
+}
+
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* GRAIN OVERLAY */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9998;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 900px) {
+  .value-grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+@media (max-width: 768px) {
+  body { cursor: auto; }
+  .cursor { display: none !important; }
+  nav { padding: 0.875rem 1.25rem !important; flex-wrap: wrap; gap: 0.75rem; }
+  nav.scrolled { padding: 0.75rem 1.25rem !important; }
+  .nav-links { gap: 1.25rem; flex-wrap: wrap; }
+  .page-hero { padding: 8rem 1.25rem 3rem; }
+  .section-pad, .section-pad-tight { padding: 3.5rem 1.25rem; }
+  .section-header { flex-wrap: wrap; gap: 0.75rem; }
+  .section-title { font-size: 2.5rem; }
+  .dark-block { padding: 4rem 1.25rem; }
+  .dark-block-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .dark-block-headline { font-size: 2.5rem; }
+  .form-row { grid-template-columns: 1fr; }
+  footer { padding: 3rem 1.25rem 1.5rem; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+}
+@media (max-width: 480px) {
+  .footer-top { grid-template-columns: 1fr; }
+  nav { flex-direction: column; text-align: center; }
+  .nav-links { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar" class="scrolled">
+  <a href="index.html" class="nav-logo">
+    AHANKARI
+    <span class="nav-tagline">Your Dadi's Era, Your Drip!!!</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#shop">Shop</a></li>
+    <li><a href="index.html#our-thing">Our Thing</a></li>
+    <li><a href="index.html#drops">Drops</a></li>
+    
+  </ul>
+  <a href="index.html" class="nav-cart">Cart (0)</a>
+</nav>
+
+<style>
+/* PRODUCT DETAIL PAGE — scoped additions */
+.breadcrumb {
+  padding: 7rem 4rem 0;
+  font-size: 11px; letter-spacing: 0.08em;
+  color: var(--sepia); text-transform: uppercase;
+}
+.breadcrumb a { color: var(--sepia); text-decoration: none; }
+.breadcrumb a:hover { color: var(--brick-red); }
+.breadcrumb .sep { margin: 0 6px; opacity: 0.5; }
+.breadcrumb .current { color: var(--near-black); }
+
+.pdp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  padding: 2.5rem 4rem 5rem;
+  align-items: start;
+}
+.pdp-image-wrap {
+  background: var(--near-black);
+  aspect-ratio: 4/5;
+  position: relative;
+  overflow: hidden;
+}
+.pdp-image-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.25s ease;
+}
+.pdp-image-note {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 0.9rem 1.1rem;
+  background: linear-gradient(transparent, rgba(15,11,8,0.9));
+  font-size: 9px; letter-spacing: 0.14em;
+  color: rgba(242,237,228,0.6); text-transform: uppercase;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+/* image arrow switcher */
+.pdp-image-arrow {
+  position: absolute;
+  top: 50%; right: 14px;
+  transform: translateY(-50%);
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: rgba(15,11,8,0.55);
+  border: 1px solid rgba(242,237,228,0.35);
+  color: var(--parchment);
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: none;
+  z-index: 3;
+  transition: background 0.2s, transform 0.2s;
+}
+.pdp-image-arrow:hover {
+  background: var(--brick-red);
+  border-color: var(--brick-red);
+}
+.pdp-image-arrow:active { transform: translateY(-50%) scale(0.92); }
+.pdp-image-dots {
+  position: absolute; top: 14px; right: 14px;
+  display: flex; gap: 6px; z-index: 3;
+}
+.pdp-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(242,237,228,0.35);
+  transition: background 0.2s;
+}
+.pdp-dot.active { background: var(--parchment); }
+
+.pdp-info { padding-top: 0.5rem; }
+.pdp-type {
+  font-size: 10px; letter-spacing: 0.18em;
+  color: var(--sepia); text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.pdp-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem; letter-spacing: 0.03em;
+  color: var(--near-black); line-height: 1;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+.pdp-price {
+  font-size: 1.1rem; color: var(--mustard); font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+.pdp-detail {
+  font-size: 11px; color: var(--sepia);
+  letter-spacing: 0.06em; font-style: italic;
+  margin-bottom: 1.75rem;
+}
+.pdp-desc {
+  font-size: 12.5px; color: var(--near-black);
+  opacity: 0.8; line-height: 1.9; letter-spacing: 0.02em;
+  max-width: 440px; margin-bottom: 2rem;
+}
+
+.pdp-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--near-black);
+  margin-bottom: 0.7rem;
+}
+.size-selector { display: flex; gap: 10px; margin-bottom: 1.75rem; }
+.size-option {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700;
+  width: 46px; height: 46px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--near-black);
+  cursor: none;
+  transition: all 0.2s;
+}
+.size-option:hover { border-color: var(--brick-red); }
+.size-option.active {
+  background: var(--brick-red);
+  border-color: var(--brick-red);
+  color: var(--parchment);
+}
+
+.qty-row {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 2rem;
+}
+.qty-stepper {
+  display: flex; align-items: center;
+  border: 1px solid var(--border);
+}
+.qty-btn {
+  width: 38px; height: 42px;
+  background: transparent; border: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--near-black);
+  cursor: none;
+  transition: background 0.2s;
+}
+.qty-btn:hover { background: var(--parchment-dark); }
+.qty-value {
+  width: 40px; text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+}
+
+.pdp-actions { display: flex; flex-direction: column; gap: 12px; margin-bottom: 1rem; }
+.add-to-cart-msg {
+  font-size: 11px; letter-spacing: 0.08em;
+  color: var(--teal); text-transform: uppercase;
+  opacity: 0; transition: opacity 0.3s ease;
+  min-height: 14px;
+}
+.add-to-cart-msg.show { opacity: 1; }
+
+.pdp-meta-row {
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+  margin-top: 1.5rem; padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.pdp-meta-item { font-size: 10px; color: var(--sepia); letter-spacing: 0.06em; }
+.pdp-meta-item b { color: var(--near-black); display: block; font-size: 11px; margin-bottom: 2px; letter-spacing: 0.04em; }
+
+.pdp-tabs {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  padding: 0 4rem 5rem;
+}
+.pdp-tab-card {
+  background: var(--parchment-dark);
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+}
+.pdp-tab-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.pdp-tab-body { font-size: 12px; color: var(--sepia); line-height: 1.9; letter-spacing: 0.02em; }
+.pdp-tab-body ul { margin: 0.5rem 0 0 1.1rem; }
+.pdp-tab-body li { margin-bottom: 0.4rem; }
+
+@media (max-width: 768px) {
+  .breadcrumb { padding: 6rem 1.25rem 0; }
+  .pdp-grid { grid-template-columns: 1fr; padding: 2rem 1.25rem 3rem; gap: 2rem; }
+  .pdp-tabs { grid-template-columns: 1fr; padding: 0 1.25rem 3rem; }
+  .pdp-name { font-size: 2.25rem; }
+}
+</style>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb reveal">
+  <a href="index.html">Home</a><span class="sep">/</span>
+  <a href="index.html#shop">Shop</a><span class="sep">/</span>
+  <span class="current">Netra</span>
+</div>
+
+<!-- PRODUCT DETAIL -->
+<section class="pdp-grid">
+  <div class="pdp-image-wrap reveal">
+    <img id="pdpImage" src="images/netra-front.png" alt="Netra - Ringer Tee, front print">
+    <div class="product-badge badge-text" style="position:absolute; top:12px; left:12px; z-index:3;">Text Piece</div>
+    <div class="pdp-image-dots" id="pdpDots">
+      <div class="pdp-dot active" data-index="0"></div>
+      <div class="pdp-dot" data-index="1"></div>
+    </div>
+    <button class="pdp-image-arrow" onclick="nextImage()" aria-label="Show next image">›</button>
+    <div class="pdp-image-note"><span id="pdpImageLabel">Front print detail — Text Piece</span></div>
+  </div>
+
+  <div class="pdp-info reveal">
+    <p class="pdp-type">Ringer Tee</p>
+    <h1 class="pdp-name">Netra</h1>
+    <p class="pdp-price">₹1,399</p>
+    <p class="pdp-detail">front + back print — tap the arrow to browse</p>
+    <p class="pdp-desc">A ringer tee built around a triptych of eyes and the line "it's the netra that never lies chico" — Hindi and English text-piece styling on the back, contrast ringer trim. Part of Drop 001 — limited pieces, no restocks once sold out.</p>
+
+    <p class="pdp-label">Size</p>
+    <div class="size-selector" id="sizeSelector">
+      <button class="size-option" data-size="S" onclick="selectSize(this)">S</button>
+      <button class="size-option active" data-size="M" onclick="selectSize(this)">M</button>
+      <button class="size-option" data-size="L" onclick="selectSize(this)">L</button>
+    </div>
+
+    <p class="pdp-label">Quantity</p>
+    <div class="qty-row">
+      <div class="qty-stepper">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <span class="qty-value" id="qtyValue">1</span>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+    </div>
+
+    <div class="pdp-actions">
+      <button class="btn-primary" style="width:100%; text-align:center;" onclick="addToCart()"><span>Add to Cart — ₹1,399 →</span></button>
+      <p class="add-to-cart-msg" id="cartMsg">Added to cart</p>
+    </div>
+
+    <div class="pdp-meta-row">
+      <div class="pdp-meta-item"><b>Fabric</b>Cotton, ringer trim</div>
+      <div class="pdp-meta-item"><b>Print</b>Front + back — screen print</div>
+      <div class="pdp-meta-item"><b>Shipping</b>Free above ₹1,499</div>
+      <div class="pdp-meta-item"><b>Returns</b>7-day return window</div>
+    </div>
+  </div>
+</section>
+
+<!-- DETAILS / CARE -->
+<section class="pdp-tabs">
+  <div class="pdp-tab-card reveal">
+    <p class="pdp-tab-title">Fit &amp; Fabric</p>
+    <div class="pdp-tab-body">
+      <p>Regular fit ringer tee with contrast trim at the neck and sleeves.</p>
+      <ul>
+        <li>Model is 5'10" wearing size M</li>
+        <li>True to size</li>
+        <li>Available in S / M / L</li>
+      </ul>
+    </div>
+  </div>
+  <div class="pdp-tab-card reveal">
+    <p class="pdp-tab-title">Care Instructions</p>
+    <div class="pdp-tab-body">
+      <ul>
+        <li>Machine wash cold, inside out</li>
+        <li>Do not bleach</li>
+        <li>Iron on reverse, avoid direct heat on the print</li>
+        <li>Line dry in shade to protect the print</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BACK TO SHOP CTA -->
+<section class="drops-strip" style="background: var(--brick-red); padding: 5rem 4rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:2rem;">
+  <div class="reveal">
+    <p class="drops-eyebrow">Drop 001</p>
+    <h2 class="drops-title">See The Full<br>Collection.</h2>
+  </div>
+  <a href="index.html#shop" class="btn-secondary reveal" style="text-decoration:none;">Back to Shop →</a>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top reveal">
+    <div>
+      <p class="footer-brand-name">AHANKARI</p>
+      <p class="footer-brand-tag">Your Dadi's Era, Your Drip!!! </p>
+      <p class="footer-brand-copy">Indian pop art on real clothes.<br>Noida. Est. 2026.</p>
+    </div>
+    <div>
+      <p class="footer-col-title">Shop</p>
+      <ul class="footer-links">
+        <li><a href="index.html#shop">All Products</a></li>
+        <li><a href="index.html#shop">Retro Drop</a></li>
+        <li><a href="index.html#shop">Y2K Edit</a></li>
+        <li><a href="index.html#shop">Text Pieces</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Info</p>
+      <ul class="footer-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="index.html#our-thing">Our Thing</a></li>
+        <li><a href="return-policy.html">Shipping &amp; Returns</a></li>
+        <li><a href="terms-and-conditions.html">Terms &amp; Conditions</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Follow</p>
+      <ul class="footer-links">
+        <li><a href="#">Instagram</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 AHANKARI. All rights reserved.</p>
+    <p class="footer-made">Made in India. For people who remember.</p>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('a, button, .value-card, .filter-pill').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+// NAVBAR SCROLL
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 80 || window.scrollY === 0);
+});
+// SCROLL REVEAL
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(r => observer.observe(r));
+// PRODUCT PAGE — image switcher / size / qty / cart logic
+let selectedSize = 'M';
+let qty = 1;
+let currentImageIndex = 0;
+
+const pdpImages = [
+  { src: 'images/netra-front.png', label: 'Front print detail — Text Piece' },
+  { src: 'images/netra-back.png', label: 'Back print detail — Text Piece' }
+];
+
+function nextImage() {
+  currentImageIndex = (currentImageIndex + 1) % pdpImages.length;
+  updateImage();
+}
+
+function updateImage() {
+  const img = document.getElementById('pdpImage');
+  const label = document.getElementById('pdpImageLabel');
+  img.style.opacity = '0';
+  setTimeout(() => {
+    img.src = pdpImages[currentImageIndex].src;
+    label.textContent = pdpImages[currentImageIndex].label;
+    img.style.opacity = '1';
+  }, 150);
+
+  document.querySelectorAll('.pdp-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentImageIndex);
+  });
+}
+
+function selectSize(btn) {
+  document.querySelectorAll('.size-option').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedSize = btn.dataset.size;
+}
+
+function changeQty(delta) {
+  qty = Math.max(1, qty + delta);
+  document.getElementById('qtyValue').textContent = qty;
+}
+
+function getCart() {
+  try {
+    return JSON.parse(localStorage.getItem('ahankari_cart') || '[]');
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveCart(cart) {
+  localStorage.setItem('ahankari_cart', JSON.stringify(cart));
+}
+
+function updateCartCountDisplay() {
+  const cart = getCart();
+  const count = cart.reduce((sum, item) => sum + item.qty, 0);
+  document.querySelectorAll('.nav-cart').forEach(el => {
+    el.textContent = `Cart (${count})`;
+  });
+}
+
+function addToCart() {
+  const cart = getCart();
+  const existing = cart.find(item => item.name === 'Netra' && item.size === selectedSize);
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    cart.push({ name: 'Netra', size: selectedSize, price: 1399, qty: qty });
+  }
+  saveCart(cart);
+  updateCartCountDisplay();
+
+  const msg = document.getElementById('cartMsg');
+  msg.textContent = `Added ${qty} × Netra (${selectedSize}) to cart`;
+  msg.classList.add('show');
+  setTimeout(() => msg.classList.remove('show'), 2500);
+}
+
+// reflect cart count on page load
+updateCartCountDisplay();
+
+</script>
+<!-- GSAP Core -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+<!-- GSAP ScrollTrigger -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+<!-- Lenis Smooth Scroll -->
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+<script>
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true,
+  });
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+</script>
+</body>
+</html>
