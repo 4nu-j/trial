@@ -1022,9 +1022,11 @@ body::after {
     <p class="drops-sub">get notified before it goes live.<br>limited pieces. no restocks.</p>
   </div>
   <div class="drops-form reveal">
-    <input class="drops-input" type="email" placeholder="your@email.com" />
-    <button class="btn-secondary">Notify Me →</button>
-  </div>
+    <form action="https://formspree.io/f/xkjwgkbl" method="POST">
+        <input class="drops-input" type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit" class="btn-secondary">Notify Me &rarr;</button>
+    </form>
+</div> 
 </section>
 
 <!-- FOOTER -->
