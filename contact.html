@@ -489,16 +489,15 @@ body::after {
 <!-- FORM + INFO -->
 <section class="section-pad">
   <div class="form-grid">
-    <form class="contact-form reveal" onsubmit="event.preventDefault(); alert('This form is a design preview — connect it to your email service or a form backend (e.g. Formspree) to actually receive messages.');">
-      <div class="form-row">
-        <input class="form-input" type="text" placeholder="your name" required>
-        <input class="form-input" type="email" placeholder="your@email.com" required>
-      </div>
-      <input class="form-input" type="text" placeholder="subject">
-      <textarea class="form-textarea" placeholder="what's on your mind?" required></textarea>
-      <button type="submit" class="btn-primary" style="align-self:flex-start;"><span>Send Message →</span></button>
-      <p class="form-note">This form doesn't send emails yet — it needs to be connected to a backend or a service like Formspree/Netlify Forms before it goes live.</p>
-    </form>
+  <form class="contact-form reveal" action="https://formspree.io/f/mwlepard" method="POST">
+    <div class="form-row">
+        <input class="form-input" type="text" name="name" placeholder="your name" required>
+        <input class="form-input" type="email" name="email" placeholder="your@email.com" required>
+    </div>
+    <input class="form-input" type="text" name="subject" placeholder="subject">
+    <textarea class="form-textarea" name="message" placeholder="what's on your mind?" required></textarea>
+    <button type="submit" class="btn-primary" style="align-self:flex-start;"><span>Send Message &rarr;</span></button>
+</form>
 
     <div class="contact-info reveal">
       <p class="contact-info-title">Email</p>
