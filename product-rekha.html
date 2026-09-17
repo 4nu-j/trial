@@ -517,6 +517,40 @@ body::after {
   color: rgba(242,237,228,0.6); text-transform: uppercase;
 }
 
+  .pdp-image-wrap img {
+  transition: opacity 0.25s ease;
+}
+.pdp-image-arrow {
+  position: absolute;
+  top: 50%; right: 14px;
+  transform: translateY(-50%);
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: rgba(15,11,8,0.55);
+  border: 1px solid rgba(242,237,228,0.35);
+  color: var(--parchment);
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: none;
+  z-index: 3;
+  transition: background 0.2s, transform 0.2s;
+}
+.pdp-image-arrow:hover {
+  background: var(--brick-red);
+  border-color: var(--brick-red);
+}
+.pdp-image-arrow:active { transform: translateY(-50%) scale(0.92); }
+.pdp-image-dots {
+  position: absolute; top: 14px; right: 14px;
+  display: flex; gap: 6px; z-index: 3;
+}
+.pdp-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(242,237,228,0.35);
+  transition: background 0.2s;
+}
+.pdp-dot.active { background: var(--parchment); }
+
 .pdp-info { padding-top: 0.5rem; }
 .pdp-type {
   font-size: 10px; letter-spacing: 0.18em;
@@ -648,9 +682,15 @@ body::after {
 
 <!-- PRODUCT DETAIL -->
 <section class="pdp-grid">
-  <div class="pdp-image-wrap reveal">
-    <img src="images/REKHA-back.png" alt="Rekha - Full Sleeve Box Fit Shirt, back print">
-    <div class="pdp-image-note">Back print detail — Retro Drop</div>
+    <div class="pdp-image-wrap reveal">
+    <img id="pdpImage" src="images/REKHA-front.png" alt="Rekha - Full Sleeve Box Fit Shirt, front print">
+    <div class="product-badge badge-retro" style="position:absolute; top:12px; left:12px; z-index:3;">Retro Drop ↗</div>
+    <div class="pdp-image-dots" id="pdpDots">
+      <div class="pdp-dot active" data-index="0"></div>
+      <div class="pdp-dot" data-index="1"></div>
+    </div>
+    <button class="pdp-image-arrow" onclick="nextImage()" aria-label="Show next image">›</button>
+    <div class="pdp-image-note"><span id="pdpImageLabel">Front print detail — Retro Drop</span></div>
   </div>
 
   <div class="pdp-info reveal">
@@ -795,6 +835,32 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 reveals.forEach(r => observer.observe(r));
 // PRODUCT PAGE — size / qty / cart logic
+  let currentImageIndex = 0;
+
+const pdpImages = [
+  { src: 'images/REKHA-front.png', label: 'Front print detail — Retro Drop' },
+  { src: 'images/REKHA-back.png', label: 'Back print detail — Retro Drop' }
+];
+
+function nextImage() {
+  currentImageIndex = (currentImageIndex + 1) % pdpImages.length;
+  updateImage();
+}
+
+function updateImage() {
+  const img = document.getElementById('pdpImage');
+  const label = document.getElementById('pdpImageLabel');
+  img.style.opacity = '0';
+  setTimeout(() => {
+    img.src = pdpImages[currentImageIndex].src;
+    label.textContent = pdpImages[currentImageIndex].label;
+    img.style.opacity = '1';
+  }, 150);
+
+  document.querySelectorAll('.pdp-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentImageIndex);
+  });
+}
 let selectedSize = 'M';
 let qty = 1;
 
