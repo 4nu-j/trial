@@ -90,7 +90,7 @@ nav.scrolled {
   text-transform: uppercase;
 }
 .nav-links a:hover { opacity: 1; }
-.nav-cart {
+/*.nav-cart {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 13px; font-weight: 600;
   letter-spacing: 0.14em;
@@ -104,7 +104,7 @@ nav.scrolled {
 .nav-cart:hover {
   background: var(--parchment);
   color: var(--near-black);
-}
+}*/
 
 /* HERO */
 .hero {
@@ -794,10 +794,10 @@ body::after {
   </ul>
   <div class="cart-wrapper" style="position: relative; display: flex; align-items: center;">
     <!-- The Grandma Video (Hidden by default) -->
-    <video id="grandma-mascot" src="images/grandma-animation.webm" muted playsinline style="position: absolute; right: 100px; width: 45px; opacity: 0; pointer-events: none; transform-origin: center;"></video>
+    <!--<video id="grandma-mascot" src="images/grandma-animation.webm" muted playsinline style="position: absolute; right: 100px; width: 45px; opacity: 0; pointer-events: none; transform-origin: center;"></video> -->
     
     <!-- Your existing cart button -->
-    <a href="#" class="nav-cart" id="cart-btn">Cart (<span id="cart-count">0</span>)</a>
+    <!--<a href="#" class="nav-cart" id="cart-btn">Cart (<span id="cart-count">0</span>)</a>-->
 </div>
 </nav>
 
@@ -1236,12 +1236,12 @@ function setFilter(btn, filter) {
 
   <script>
     // Grab the elements from your HTML
-    const grandmaVideo = document.getElementById('grandma-mascot');
-    const cartCountEl = document.getElementById('cart-count');
-    let currentCartCount = 0;
+ //   const grandmaVideo = document.getElementById('grandma-mascot');
+   // const cartCountEl = document.getElementById('cart-count');
+   // let currentCartCount = 0; 
 
     // The function that plays the 2-second animation
-    function playCartAnimation() {
+  /*  function playCartAnimation() {
         currentCartCount++; // Increase the cart number
         
         // Reset the video to the start and play it
@@ -1284,7 +1284,7 @@ function setFilter(btn, filter) {
     //         e.preventDefault();
     //         playCartAnimation();
     //     });
-    // });
+    // });*/
 </script>
   
 </body>
