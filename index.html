@@ -508,15 +508,22 @@ nav.scrolled {
   font-size: 1rem; color: rgba(242,237,228,0.1);
   letter-spacing: 0.1em;
 }
-  .our-img-inner {
-  overflow: hidden; /* Prevents image from overflowing the container border */
-}
-
-.our-img-inner img {
+ .our-img-inner {
+  position: relative;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
+  overflow: hidden; /* Clips any overflow from top/bottom */
+}
+
+/* 2. Force the image to cover the container area cleanly */
+.our-img-inner img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Maintains aspect ratio without stretching */
+  object-position: center; /* Keeps the subject centered */
 }
 
 /* DROPS STRIP */
