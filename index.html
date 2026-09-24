@@ -1004,7 +1004,13 @@ body::after {
     </div>
     <div class="our-thing-images reveal">
       <div class="our-img-box">
-        <div class="our-img-inner">Retro Print Detail
+        <div class=".our-img-inner {
+  overflow: hidden; <!-- Prevents image from overflowing the container border -->}
+.our-img-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; <!-- Fits image neatly without stretching -->
+  display: block;}">Retro Print Detail
         <img src="images/image-1.jpeg" alt="Retro Print Detail"> </div>
         <div class="our-img-label">Back print detail — Retro Drop</div>
       </div>
