@@ -938,8 +938,8 @@ updateCartCountDisplay();*/
   requestAnimationFrame(raf);
 </script>
   <!--whatsapp size button-->
-  <script>
-  let selectedSize = "M"; // matches your default active button
+ <script>
+  let selectedSize = "M";
   let quantity = 1;
 
   function selectSize(el) {
@@ -957,12 +957,10 @@ updateCartCountDisplay();*/
     e.preventDefault();
 
     const productName = "Blond";
-    const message = `I want to order ${quantity} unit of ${productName}, size ${selectedSize}, code ARAMBH`;
     const unitLabel = quantity > 1 ? "units" : "unit";
     const message = `I want to order ${quantity} ${unitLabel} of ${productName}, size ${selectedSize}, code ARAMBH`;
     const encodedMessage = encodeURIComponent(message);
     const waLink = `https://wa.me/919266389165?text=${encodedMessage}`;
-    
 
     window.open(waLink, '_blank');
   });
