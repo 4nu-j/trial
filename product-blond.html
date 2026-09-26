@@ -718,8 +718,8 @@ body::after {
       </div>
     </div>
 
-   <div class="pdp-actions">
-  <a href="https://wa.me/919266389165?text=I%20want%20to%20order%20Blond%20of%20the%20size%20%5B%20%5D%2C%20code%20ARAMBH" target="_blank" class="btn-primary" style="width:100%; text-align:center; display:block;">
+  <div class="pdp-actions">
+  <a id="whatsappOrderBtn" href="https://wa.me/919266389165?text=I%20want%20to%20order%20Blond%20of%20the%20size%20M%2C%20code%20ARAMBH" target="_blank" class="btn-primary" style="width:100%; text-align:center; display:block;">
     <span>Order on Whatsapp for ₹1,499 (code ARAMBH)→</span>
   </a>
 </div>
@@ -936,6 +936,33 @@ updateCartCountDisplay();
     requestAnimationFrame(raf);
   }
   requestAnimationFrame(raf);
+</script>
+  <!--whatsapp size button-->
+  <script>
+  let selectedSize = "M"; // matches your default active button
+  let quantity = 1;
+
+  function selectSize(el) {
+    document.querySelectorAll('.size-option').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    selectedSize = el.dataset.size;
+  }
+
+  function changeQty(change) {
+    quantity = Math.max(1, quantity + change);
+    document.getElementById('qtyValue').textContent = quantity;
+  }
+
+  document.getElementById('whatsappOrderBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+
+    const productName = "Blond";
+    const message = `I want to order ${productName} of the size ${selectedSize}, quantity ${quantity}, code ARAMBH`;
+    const encodedMessage = encodeURIComponent(message);
+    const waLink = `https://wa.me/919266389165?text=${encodedMessage}`;
+
+    window.open(waLink, '_blank');
+  });
 </script>
 </body>
 </html>
