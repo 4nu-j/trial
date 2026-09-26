@@ -957,9 +957,11 @@ updateCartCountDisplay();*/
     e.preventDefault();
 
     const productName = "Blond";
-    const message = `I want to order ${productName} of the size ${selectedSize}, quantity ${quantity}, code ARAMBH`;
+    const message = `I want to order ${quantity} unit of ${productName}, size ${selectedSize}, code ARAMBH`;
     const encodedMessage = encodeURIComponent(message);
     const waLink = `https://wa.me/919266389165?text=${encodedMessage}`;
+    const unitLabel = quantity > 1 ? "units" : "unit";
+    const message = `I want to order ${quantity} ${unitLabel} of ${productName}, size ${selectedSize}, code ARAMBH`;
 
     window.open(waLink, '_blank');
   });
