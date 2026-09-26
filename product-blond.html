@@ -702,25 +702,22 @@ body::after {
     <p class="pdp-desc">A waffle-knit tee featuring a retro postage-stamp inspired print and bold "BLOND" back type. Part of Drop 001 — limited pieces, no restocks once sold out.</p>
 
     <p class="pdp-label">Size</p>
-    <div class="size-selector" id="sizeSelector">
-      <button class="size-option" data-size="S" onclick="selectSize(this)">S</button>
-      <button class="size-option active" data-size="M" onclick="selectSize(this)">M</button>
-      <button class="size-option" data-size="L" onclick="selectSize(this)">L</button>
-      <button class="size-option" data-size="XL" onclick="selectSize(this)">XL</button>
-    </div>
+<div class="size-options">
+  <button class="size-btn" data-size="S">S</button>
+  <button class="size-btn" data-size="M">M</button>
+  <button class="size-btn" data-size="L">L</button>
+  <button class="size-btn" data-size="XL">XL</button>
+</div>
 
-    <p class="pdp-label">Quantity</p>
-    <div class="qty-row">
-      <div class="qty-stepper">
-        <button class="qty-btn" onclick="changeQty(-1)">−</button>
-        <span class="qty-value" id="qtyValue">1</span>
-        <button class="qty-btn" onclick="changeQty(1)">+</button>
-      </div>
-    </div>
+<p class="pdp-label">Quantity</p>
+<div class="qty-selector">
+  <button onclick="changeQty(-1)">−</button>
+  <span id="qtyValue">1</span>
+  <button onclick="changeQty(1)">+</button>
+</div>
 
-   <div class="pdp-actions">
-  <a href="https://wa.me/919266389165?text=I%20want%20to%20order%20Blond%20of%20the%20size%20%5B%20%5D%2C%20code%20ARAMBH" target="_blank" class="btn-primary" style="width:100%; text-align:center; display:block;">
-    <span>Order on Whatsapp for ₹1,499 (code ARAMBH)→</span>
+<a id="whatsappOrderBtn" href="#" target="_blank" class="btn-primary" style="width:100%; text-align:center; display:block;">
+  <span>Order on Whatsapp for ₹1,499 (code ARAMBH)→</span>
   </a>
 </div>
 
@@ -935,7 +932,45 @@ updateCartCountDisplay();
     lenis.raf(time);
     requestAnimationFrame(raf);
   }
-  requestAnimationFrame(raf);
+  requestAnimationFrame(raf); 
+</script>
+  
+  <!-- whatsapp button part js -->
+  <script>
+    let selectedSize = null;
+let quantity = 1;
+
+// Size button clicks
+document.querySelectorAll('.size-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedSize = btn.dataset.size;
+  });
+});
+
+// Quantity +/-
+function changeQty(change) {
+  quantity = Math.max(1, quantity + change);
+  document.getElementById('qtyValue').textContent = quantity;
+}
+
+// Build WhatsApp link right before the button is clicked
+document.getElementById('whatsappOrderBtn').addEventListener('click', function(e) {
+  e.preventDefault(); // stop default navigation first
+
+  if (!selectedSize) {
+    alert('Please select a size first');
+    return;
+  }
+
+  const productName = "Blond"; // change per page, or pull from page title
+  const message = `I want to order ${productName} of the size ${selectedSize}, quantity ${quantity}, code ARAMBH`;
+  const encodedMessage = encodeURIComponent(message);
+  const waLink = `https://wa.me/919266389165?text=${encodedMessage}`;
+
+  window.open(waLink, '_blank'); // now navigate manually
+});
 </script>
 </body>
 </html>
