@@ -840,7 +840,7 @@ reveals.forEach(r => observer.observe(r));
 // PRODUCT PAGE — image switcher / size / qty / cart logic
 /*let selectedSize = 'M';
 let qty = 1;
-let currentImageIndex = 0;
+let currentImageIndex = 0;*/
 
 const pdpImages = [
   { src: 'images/blond-front.png', label: 'Front print detail — Retro Drop ↗' },
@@ -867,7 +867,7 @@ function updateImage() {
   });
 }
 
-function selectSize(btn) {
+/*function selectSize(btn) {
   document.querySelectorAll('.size-option').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   selectedSize = btn.dataset.size;
