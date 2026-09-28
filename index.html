@@ -525,6 +525,12 @@ nav.scrolled {
   object-fit: cover; /* Maintains aspect ratio without stretching */
   object-position: center; /* Keeps the subject centered */
 }
+.our-img-inner video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
 /* DROPS STRIP */
 .drops-strip {
@@ -1019,12 +1025,16 @@ body::after {
               Orders are currently being taken via WhatsApp. Pick your pieces, drop us a message with your size and delivery details, and we'll take it from there. Online checkout is coming soon!
             </p>
     </div>
-    <div class="our-thing-images reveal">
-      <div class="our-img-box">
-        <div class="our-img-inner">Retro Print Detail
-        <img src="images/image-1.jpeg" alt="Retro Print Detail"> </div>
-        <div class="our-img-label">Back print detail — Retro Drop</div>
-      </div>
+   <div class="our-thing-images reveal">
+  <div class="our-img-box">
+    <div class="our-img-inner">Retro Print Detail
+      <video src="videos/back-image-vid.mp4"
+             autoplay muted loop playsinline preload="metadata">
+      </video>
+    </div>
+    <div class="our-img-label">Back print detail — Retro Drop</div>
+  </div>
+</div>
       <div class="our-img-box">
         <div class="our-img-inner">Front Design Detail
          <img src="images/image-3.jpeg" alt="Front Design Detail"> </div>
