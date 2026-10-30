@@ -1267,13 +1267,28 @@ reveals.forEach(r => observer.observe(r));
 function setFilter(btn, filter) {
   document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
+
   document.querySelectorAll('.product-card').forEach(card => {
     const tags = card.dataset.tags || '';
     const show = filter === 'all' || tags.includes(filter);
-    card.style.opacity = show ? '1' : '0.15';
-    card.style.pointerEvents = show ? 'auto' : 'none';
-    card.style.transform = show ? '' : 'rotate(0deg) scale(0.95)';
+
     card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+
+    if (show) {
+      card.style.display = '';
+      card.style.pointerEvents = 'auto';
+      requestAnimationFrame(() => {
+        card.style.opacity = '1';
+        card.style.transform = '';
+      });
+    } else {
+      card.style.opacity = '0';
+      card.style.transform = 'scale(0.95)';
+      card.style.pointerEvents = 'none';
+      setTimeout(() => {
+        if (card.style.opacity === '0') card.style.display = 'none';
+      }, 300);
+    }
   });
 }
 </script>
