@@ -1406,6 +1406,51 @@ function setFilter(btn, filter) {
     //         playCartAnimation();
     //     });
     // });*/
+
+    // LIVE COUNTS on filter pills
+function addFilterCounts() {
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    const onclick = pill.getAttribute('onclick') || '';
+    const match = onclick.match(/setFilter\(this,\s*'([^']+)'\)/);
+    if (!match) return;
+    const filter = match[1];
+
+    const count = filter === 'all'
+      ? document.querySelectorAll('.product-card').length
+      : document.querySelectorAll(`.product-card[data-tags*="${filter}"]`).length;
+
+    // store original label once, so re-running this doesn't double-append
+    if (!pill.dataset.baseLabel) {
+      pill.dataset.baseLabel = pill.textContent.trim();
+    }
+    pill.textContent = `${pill.dataset.baseLabel} (${count})`;
+  });
+}
+
+// REORDER product cards by type, grouped to match filter pill order
+function reorderCardsByType() {
+  const grid = document.getElementById('productGrid');
+  if (!grid) return;
+
+  // same order as your filter pills, minus 'all'
+  const typeOrder = ['waffle', 'tees', 'oversized', 'winter'];
+
+  const cards = Array.from(grid.querySelectorAll('.product-card'));
+  cards.sort((a, b) => {
+    const aTags = (a.dataset.tags || '').split(' ');
+    const bTags = (b.dataset.tags || '').split(' ');
+    const aIndex = typeOrder.findIndex(t => aTags.includes(t));
+    const bIndex = typeOrder.findIndex(t => bTags.includes(t));
+    // unmatched types go to the end, keep original order among ties
+    return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
+  });
+
+  cards.forEach(card => grid.appendChild(card)); // re-inserts in sorted order
+}
+
+// run both once on load
+reorderCardsByType();
+addFilterCounts();
 </script>
   
 </body>
